@@ -1,0 +1,80 @@
+<html>
+  
+  <head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="app.css">
+
+    <script>
+      // tweet out the random quote
+      function tweet(message) {
+        window.open('https://twitter.com/intent/tweet?hashtags= freecodecamp&text='   + encodeURIComponent(message));
+      }
+
+      var msg;
+      
+      function tweetHandler() {
+      tweet($(msg).text()); 
+      }
+      
+      $(document).ready(function() {
+        
+        // request a random quote from API
+        $("#randomQuote").on("click", function(){
+
+          $.getJSON( "https://ron-swanson-quotes.herokuapp.com/v2/quotes", function( data ) {
+            msg = $("#quotes").text(data);
+          });
+
+          $(".message").html(msg);
+          
+        });
+
+        $('#tweetMessage').on('click', tweetHandler);
+      });
+    </script>
+
+  </head>
+  
+  <body>
+
+    <div class="container-fluid">
+            
+      <div class = "row">
+        <h2>Random Quote Machine</h2>
+      </div>
+      
+      <div class = "row">
+        <div id = "quotes" class = "col-xs-12 well message">
+          The quote will go here
+        </div>
+      </div>
+      
+      <div class = "row">
+        <div class = "col-xs-12">
+          <button id = "randomQuote" class = "btn btn-primary">
+            New random Quote
+          </button>
+
+          <button id = "tweetMessage" class = "btn btn-primary">
+            Tweet it
+          </button>
+        </div>
+      </div>
+      
+    </div>
+
+  </body>
+  
+</html>
